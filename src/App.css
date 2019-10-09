@@ -20,3 +20,28 @@
 .App-link {
   color: #09d3ac;
 }
+.mt-5{
+  margin-top: 30px;
+}
+.mt-15{
+  margin-top: 15px;
+}
+.mr-5{
+  margin-left: 10px;
+}
+.ml-15{
+  margin-right: 5px;
+}
+.text-right{
+  float: right;
+  cursor: pointer;
+}
+.text-right:hover{
+  color: red;
+}
+.sort_selected::after{
+  content: '\f00c';
+  font-family: FontAwesome;
+  margin: 0px 0px 0px 10px;
+  padding: 2px 2px 2px;
+}

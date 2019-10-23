@@ -3,12 +3,13 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
+import {connect} from 'react-redux';
+import * as actions from './actions/index';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDisplayForm: false,
             taskEditing: null,
             filter: {
                 name: '',
@@ -30,17 +31,18 @@ class App extends Component {
     // }
 
     onToggleForm = () => {
-        if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-            this.setState({
-                isDisplayForm: true,
-                taskEditing: null
-            });
-        } else {
-            this.setState({
-                isDisplayForm: !this.state.isDisplayForm,
-                taskEditing: null
-            });
-        }
+        // if (this.state.isDisplayForm && this.state.taskEditing !== null) {
+        //     this.setState({
+        //         isDisplayForm: true,
+        //         taskEditing: null
+        //     });
+        // } else {
+        //     this.setState({
+        //         isDisplayForm: !this.state.isDisplayForm,
+        //         taskEditing: null
+        //     });
+        // }
+        this.props.onToggleForm();
     }
 
     onSubmit = (data) => {
@@ -57,12 +59,6 @@ class App extends Component {
             taskEditing: null
         });
         localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
-
-    onCloseForm = () => {
-        this.setState({
-            isDisplayForm: false
-        });
     }
 
     onShowForm = () => {
@@ -141,7 +137,8 @@ class App extends Component {
     }
 
     render() {
-        var { isDisplayForm, taskEditing, sortBy, sortValue } = this.state;
+        var { taskEditing, sortBy, sortValue } = this.state;
+        var {isDisplayForm} = this.props;
 
         //chức năng trạng thái status
         // if (filter) {
@@ -181,8 +178,6 @@ class App extends Component {
         // }
 
         var elmTaskForm = isDisplayForm ? <TaskForm
-            onSubmit={this.onSubmit}
-            onCloseForm={this.onCloseForm}
             taskEditing={taskEditing} /> : '';
 
         return (
@@ -225,4 +220,18 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isDisplayForm: state.isDisplayForm
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        onToggleForm: () =>{
+            dispatch(actions.toggleForm())
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

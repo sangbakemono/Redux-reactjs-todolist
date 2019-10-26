@@ -1,6 +1,6 @@
 import * as types from './../constants/ActionTypes';
 
-var initialState = true; // close form
+var initialState = false; // close form
 
 var myReducer = (state = initialState, action) => {
     switch(action.type){
@@ -17,3 +17,4 @@ var myReducer = (state = initialState, action) => {
 };
 
 export default myReducer;
+

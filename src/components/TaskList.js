@@ -25,9 +25,7 @@ class TaskList extends Component {
     render() {
         var {tasks} = this.props;
         var elmTasks = tasks.map((task, index)=>{
-            return <TaskItem key={task.id} index={index} task={task} 
-                            onDelete={this.props.onDelete}
-                            onUpdate={this.props.onUpdate}/>
+            return <TaskItem key={task.id} index={index} task={task} />
         });
         return (
             <table className="table table-bordered table-hover">

@@ -13,28 +13,26 @@ class TaskForm extends Component {
     }
     
     UNSAFE_componentWillMount(){
-        if(this.props.taskEditing){
+        if(this.props.itemEditing){
             this.setState({
-                id: this.props.taskEditing.id,
-                name: this.props.taskEditing.name,
-                status: this.props.taskEditing.status
+                id: this.props.itemEditing.id,
+                name: this.props.itemEditing.name,
+                status: this.props.itemEditing.status
             });
+        }else{
+            this.onClear();
         }
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        if(nextProps && nextProps.taskEditing){
+        if(nextProps && nextProps.itemEditing){
             this.setState({
-                id: nextProps.taskEditing.id,
-                name: nextProps.taskEditing.name,
-                status: nextProps.taskEditing.status
+                id: nextProps.itemEditing.id,
+                name: nextProps.itemEditing.name,
+                status: nextProps.itemEditing.status
             });
-        }else if(!nextProps.taskEditing){
-            this.setState({
-                id: '',
-                name: '',
-                status: false
-            });
+        }else if(!nextProps.itemEditing){
+            this.onClear();
         }
     }
     
@@ -50,9 +48,10 @@ class TaskForm extends Component {
         });
     }
 
-    onSubmit =(event) =>{
+    onSave =(event) =>{
         event.preventDefault();
-        this.props.onAddTask(this.state);
+        this.props.onSaveTask(this.state);
+
         this.onClear();
         this.onCloseForm();
     }
@@ -64,11 +63,12 @@ class TaskForm extends Component {
     onClear =()=>{
         this.setState({
             name: '',
-            value: false
+            status: false
         });
     }
     render() {
         var {id} = this.state;
+        if(!this.props.isDisplayForm) return null;
         return (
             <div className="panel panel-danger">
                 <div className="panel-heading">
@@ -78,7 +78,7 @@ class TaskForm extends Component {
                     </h3>
                 </div>
                 <div className="panel-body">
-                    <form onSubmit={this.onSubmit}>
+                    <form onSubmit={this.onSave}>
                         <div className="form-group">
                             <label>Tên:</label>
                             <input 
@@ -106,7 +106,7 @@ class TaskForm extends Component {
                                 <span className="fa fa-plus ml-15"></span>
                                 Lưu lại
                             </button>&nbsp;
-                            <button type="submit" className="btn btn-danger" onClick={this.onClear}>
+                            <button type="button" className="btn btn-danger" onClick={this.onClear}>
                                 <span className="fa fa-times ml-15"></span>
                                 Hủy bỏ
                             </button>
@@ -120,14 +120,15 @@ class TaskForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.tasks
+        isDisplayForm: state.isDisplayForm,
+        itemEditing: state.itemEditing
     }
 }
 
 const mapDispatchToProps = (dispatch,Props) => {
     return {
-        onAddTask: (task) => {
-            dispatch(actions.AddTask(task));
+        onSaveTask: (task) => {
+            dispatch(actions.saveTask(task));
         },
         onCloseForm: () =>{
             dispatch(actions.closeForm());

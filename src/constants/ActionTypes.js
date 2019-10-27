@@ -6,3 +6,6 @@ export const CLOSE_FORM = 'CLOSE_FORM';
 export const UPDATE_STATUS_TASK = 'UPDATE_STATUS_TASK';
 export const DETELE_TASK ='DETELE_TASK';
 export const EDIT_TASK = 'EDIT_TASK';
+export const FILTER_TASK = 'FILTER_TASK';
+export const SEARCH = 'SEARCH';
+export const SORT = 'SORT';

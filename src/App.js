@@ -7,19 +7,6 @@ import {connect} from 'react-redux';
 import * as actions from './actions/index';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            taskEditing: null,
-            filter: {
-                name: '',
-                status: -1
-            },
-            keyword: '',
-            sortBy: 'name',
-            sortValue: 1
-        }
-    }
 
     onToggleForm = () => {
         var { itemEditing}  = this.props;
@@ -35,79 +22,8 @@ class App extends Component {
         });
     }
 
-    // onUpdate = (id) => {
-    //     var { tasks } = this.state;
-    //     var index = this.findIndex(id);
-    //     var taskEditing = tasks[index];
-    //     this.setState({
-    //         taskEditing: taskEditing
-    //     });
-    //     this.onShowForm();
-    // }
-
-    onFilter = (filterName, filterStatus) => {
-        filterStatus = parseInt(filterStatus, 10);
-        this.setState({
-            filter: {
-                name: filterName.toLowerCase(),
-                status: filterStatus
-            }
-        });
-
-    }
-
-    onSearch = (keyword) => {
-        this.setState({
-            keyword: keyword
-        });
-    }
-    onSort = (sortBy, sortValue) => {
-        this.setState({
-            sortBy: sortBy,
-            sortValue: sortValue
-        });
-    }
-
     render() {
-        var {sortBy, sortValue } = this.state;
         var {isDisplayForm} = this.props;
-
-        //chức năng trạng thái status
-        // if (filter) {
-        //     if (filter.name) {
-        //         tasks = tasks.filter((task) => {
-        //             return task.name.toLowerCase().indexOf(filter.name) !== -1;
-        //         });
-        //     }
-        //     tasks = tasks.filter((task) => {
-        //         if (filter.status === -1) {
-        //             return task;
-        //         }
-        //         return task.status === (filter.status === 1 ? true : false)
-        //     });
-        // }
-
-        // chức năng tìm kiếm
-        // if (keyword) {
-        //     tasks = tasks.filter((task) => {
-        //         return task.name.toLowerCase().indexOf(keyword) !== -1;
-        //     });
-        // }
-
-        //chức năng sắp xếp
-        // if (sortBy === 'name') {
-        //     tasks.sort((a, b) => {
-        //         if (a.name > b.name) return sortValue;
-        //         else if (a.name < b.name) return -sortValue;
-        //         else return 0;
-        //     });
-        // } else {
-        //     tasks.sort((a, b) => {
-        //         if (a.status > b.status) return -sortValue;
-        //         else if (a.status < b.status) return sortValue;
-        //         else return 0;
-        //     });
-        // }
 
         return (
             <div className="container mt-5">
@@ -129,15 +45,10 @@ class App extends Component {
                     </button>
 
                         {/*Search - Sort*/}
-                        <Control 
-                            onSearch={this.onSearch}
-                            onSort={this.onSort}
-                            sortBy={sortBy}
-                            sortValue={sortValue} />
+                        <Control />
 
                         {/*list*/}
-                        <TaskList
-                            onFilter={this.onFilter} />
+                        <TaskList />
 
                     </div>
                 </div>
